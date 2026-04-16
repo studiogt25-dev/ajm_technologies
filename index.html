@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJM TECHNOLOGIES</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+:root{--neon-blue:#00d4ff;--neon-purple:#a855f7;--neon-cyan:#06ffd2;--neon-green:#39ff14;--bg-dark:#050a18;--bg-card:rgba(10,20,50,0.6);--glass:rgba(255,255,255,0.04);--text-primary:#e0e8ff;--text-secondary:#8892b0}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+html,body{height:100%;font-family:'Rajdhani',sans-serif;background:var(--bg-dark);color:var(--text-primary);overflow-x:hidden}
+.app-root{height:100%;overflow-y:auto;overflow-x:hidden;position:relative}
+.font-orbitron{font-family:'Orbitron',monospace}
+.glow-text{text-shadow:0 0 10px var(--neon-blue),0 0 30px rgba(0,212,255,0.3)}
+.glow-purple{text-shadow:0 0 10px var(--neon-purple),0 0 30px rgba(168,85,247,0.3)}
+.glow-box{box-shadow:0 0 15px rgba(0,212,255,0.15),inset 0 0 15px rgba(0,212,255,0.05)}
+.glow-box-purple{box-shadow:0 0 15px rgba(168,85,247,0.15),inset 0 0 15px rgba(168,85,247,0.05)}
+.glass-panel{background:rgba(10,20,50,0.5);backdrop-filter:blur(20px);border:1px solid rgba(0,212,255,0.1);border-radius:16px}
+.neon-btn{position:relative;padding:12px 32px;border:1px solid var(--neon-blue);background:rgba(0,212,255,0.08);color:var(--neon-blue);font-family:'Orbitron',monospace;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;border-radius:4px;overflow:hidden}
+.neon-btn:hover{background:rgba(0,212,255,0.2);box-shadow:0 0 25px rgba(0,212,255,0.3);transform:translateY(-2px)}
+.neon-btn-purple{border-color:var(--neon-purple);color:var(--neon-purple);background:rgba(168,85,247,0.08)}
+.neon-btn-purple:hover{background:rgba(168,85,247,0.2);box-shadow:0 0 25px rgba(168,85,247,0.3)}
+.neon-btn-green{border-color:var(--neon-green);color:var(--neon-green);background:rgba(57,255,20,0.08)}
+.neon-btn-green:hover{background:rgba(57,255,20,0.2);box-shadow:0 0 25px rgba(57,255,20,0.3)}
+.card-3d{transition:transform .4s,box-shadow .4s;transform-style:preserve-3d;perspective:800px}
+.card-3d:hover{transform:translateY(-8px) rotateX(5deg) rotateY(-5deg) scale(1.02);box-shadow:0 30px 60px rgba(0,212,255,0.25)}
+.grid-bg{background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),rgba(168,85,247,0.3),transparent)}
+canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.content-layer{position:relative;z-index:1}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(3deg)}}
+@keyframes pulse-glow{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes scan-line{0%{top:-5%}100%{top:105%}}
+@keyframes slide-up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes neon-flicker{0%{opacity:1;text-shadow:0 0 10px var(--neon-blue),0 0 30px rgba(0,212,255,0.3)}50%{opacity:.95;text-shadow:0 0 15px var(--neon-blue),0 0 40px rgba(0,212,255,0.4)}100%{opacity:1;text-shadow:0 0 10px var(--neon-blue),0 0 30px rgba(0,212,255,0.3)}}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@keyframes rotate-3d{0%{transform:rotateX(0) rotateY(0) rotateZ(0)}100%{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}}
+@keyframes pulse-border{0%{box-shadow:0 0 10px rgba(0,212,255,0.3)}50%{box-shadow:0 0 30px rgba(0,212,255,0.6)}100%{box-shadow:0 0 10px rgba(0,212,255,0.3)}}
+.animate-float{animation:float 6s ease-in-out infinite}
+.animate-float-delay{animation:float 7s ease-in-out 1s infinite}
+.animate-pulse-glow{animation:pulse-glow 3s ease-in-out infinite}
+.animate-neon-flicker{animation:neon-flicker 3s ease-in-out infinite}
+.animate-rotate-3d{animation:rotate-3d 8s linear infinite}
+.animate-pulse-border{animation:pulse-border 2s ease-in-out infinite}
+.slide-up{animation:slide-up .8s ease forwards}
+.nav-link{position:relative;color:var(--text-secondary);transition:color .3s;cursor:pointer;font-size:14px;letter-spacing:1px}
+.nav-link:hover,.nav-link.active{color:var(--neon-blue);animation:neon-flicker .4s ease}
+.nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--neon-blue);transition:width .3s}
+.nav-link:hover::after,.nav-link.active::after{width:100%}
+.price-popular{border-color:var(--neon-cyan)!important;box-shadow:0 0 30px rgba(6,255,210,0.15)}
+.price-popular::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--neon-cyan),var(--neon-blue));color:#050a18;font-family:'Orbitron',monospace;font-size:10px;padding:4px 16px;border-radius:20px;letter-spacing:1px;font-weight:700;animation:pulse-border 2s ease-in-out infinite}
+input,select,textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:12px 16px;color:var(--text-primary);font-family:'Rajdhani',sans-serif;font-size:16px;transition:all .3s;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--neon-blue);box-shadow:0 0 15px rgba(0,212,255,0.1);background:rgba(0,212,255,0.05)}
+select option{background:#0a1428;color:var(--text-primary)}
+.toast{position:fixed;bottom:30px;right:30px;z-index:9999;padding:16px 24px;border-radius:12px;font-size:15px;transition:all .5s;opacity:0;transform:translateY(20px);pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0);pointer-events:auto;animation:slide-up .4s ease}
+.toast-success{background:rgba(57,255,20,0.15);border:1px solid rgba(57,255,20,0.3);color:var(--neon-green)}
+.toast-error{background:rgba(255,50,50,0.15);border:1px solid rgba(255,50,50,0.3);color:#ff5555}
+.chatbot-container{position:fixed;bottom:24px;right:24px;z-index:1000}
+.chat-window{width:340px;height:450px;border-radius:20px;overflow:hidden;display:none;flex-direction:column;animation:slide-up .3s ease}
+.chat-window.open{display:flex}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.5;animation:slide-up .3s ease}
+.chat-msg.bot{align-self:flex-start;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.15);color:var(--text-primary)}
+.chat-msg.user{align-self:flex-end;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.2);color:var(--text-primary)}
+.typing-dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--neon-blue);margin:0 2px;animation:pulse-glow 1.2s ease-in-out infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+.mobile-menu{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,10,24,0.97);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:32px}
+.mobile-menu.open{display:flex}
+@media(max-width:768px){.desktop-nav{display:none!important}.mobile-toggle{display:block!important}}
+.loading-spinner{width:20px;height:20px;border:2px solid rgba(0,212,255,0.2);border-top-color:var(--neon-blue);border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.confirm-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,10,24,0.85);z-index:9998;display:flex;align-items:center;justify-content:center}
+.service-icon{display:inline-flex;align-items:center;justify-content:center;position:relative}
+.service-icon::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--neon-blue),var(--neon-purple),var(--neon-cyan),var(--neon-blue));opacity:0;animation:pulse-glow 3s ease-in-out infinite;border-radius:12px}
+.card-3d:hover .service-icon::before{opacity:.2}
+.parallax-section{position:relative;overflow:hidden}
+.parallax-bg{position:absolute;width:100%;height:100%;opacity:.1;z-index:0}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full">
+  <canvas id="particles"></canvas>
+  <div class="app-root content-layer" id="appRoot">
+   <!-- NAVIGATION -->
+   <nav class="fixed top-0 left-0 w-full z-50 glass-panel" style="border-radius:0;border-left:0;border-right:0;border-top:0;backdrop-filter:blur(30px)">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+     <div class="font-orbitron text-lg font-bold tracking-wider cursor-pointer" onclick="navigateTo('home')" style="background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="navLogo">
+      AJM TECH
+     </div>
+     <div class="desktop-nav flex items-center gap-8">
+      <span class="nav-link active" onclick="navigateTo('home')">Home</span> <span class="nav-link" onclick="navigateTo('services')">Services</span> <span class="nav-link" onclick="navigateTo('pricing')">Pricing</span> <span class="nav-link" onclick="navigateTo('portfolio')">Portfolio</span> <span class="nav-link" onclick="navigateTo('about')">About</span> <span class="nav-link" onclick="navigateTo('contact')">Contact</span> <span class="nav-link" onclick="navigateTo('booking')">Book Now</span>
+     </div><button class="mobile-toggle hidden" onclick="toggleMobileMenu()" style="background:none;border:none;color:var(--neon-blue);cursor:pointer"><i data-lucide="menu" style="width:28px;height:28px"></i></button>
+    </div>
+   </nav><!-- MOBILE MENU -->
+   <div class="mobile-menu" id="mobileMenu">
+    <button onclick="toggleMobileMenu()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:var(--neon-blue);cursor:pointer"><i data-lucide="x" style="width:32px;height:32px"></i></button> <span class="nav-link text-2xl" onclick="navigateTo('home');toggleMobileMenu()">Home</span> <span class="nav-link text-2xl" onclick="navigateTo('services');toggleMobileMenu()">Services</span> <span class="nav-link text-2xl" onclick="navigateTo('pricing');toggleMobileMenu()">Pricing</span> <span class="nav-link text-2xl" onclick="navigateTo('portfolio');toggleMobileMenu()">Portfolio</span> <span class="nav-link text-2xl" onclick="navigateTo('about');toggleMobileMenu()">About</span> <span class="nav-link text-2xl" onclick="navigateTo('contact');toggleMobileMenu()">Contact</span> <span class="nav-link text-2xl" onclick="navigateTo('booking');toggleMobileMenu()">Book Now</span>
+   </div><!-- TOAST -->
+   <div class="toast" id="toast"></div><!-- ========== HOME SECTION ========== -->
+   <section id="sec-home" class="min-h-full flex flex-col items-center justify-center text-center px-6 pt-24 pb-20 grid-bg" style="min-height:100%">
+    <div class="slide-up">
+     <!-- Floating tech objects -->
+     <div class="absolute top-32 left-10 animate-float opacity-30 hidden md:block">
+      <svg width="60" height="60" viewbox="0 0 60 60" fill="none"><rect x="5" y="15" width="50" height="32" rx="3" stroke="var(--neon-blue)" stroke-width="1.5" fill="none" /><rect x="15" y="50" width="30" height="3" rx="1" stroke="var(--neon-blue)" stroke-width="1" fill="none" /><circle cx="30" cy="31" r="8" stroke="var(--neon-purple)" stroke-width="1" fill="none" />
+      </svg>
+     </div>
+     <div class="absolute top-40 right-16 animate-float-delay opacity-25 hidden md:block">
+      <svg width="50" height="80" viewbox="0 0 50 80" fill="none"><rect x="5" y="2" width="40" height="76" rx="8" stroke="var(--neon-cyan)" stroke-width="1.5" fill="none" /><circle cx="25" cy="70" r="4" stroke="var(--neon-cyan)" stroke-width="1" fill="none" /><rect x="12" y="10" width="26" height="48" rx="2" stroke="var(--neon-purple)" stroke-width="0.8" fill="none" />
+      </svg>
+     </div>
+     <div class="absolute bottom-40 left-1/4 animate-float opacity-20 hidden md:block">
+      <svg width="70" height="70" viewbox="0 0 70 70" fill="none"><rect x="5" y="5" width="60" height="60" rx="4" stroke="var(--neon-green)" stroke-width="0.8" fill="none" /><line x1="5" y1="20" x2="65" y2="20" stroke="var(--neon-green)" stroke-width="0.5" /><line x1="5" y1="35" x2="65" y2="35" stroke="var(--neon-green)" stroke-width="0.5" /><line x1="5" y1="50" x2="65" y2="50" stroke="var(--neon-green)" stroke-width="0.5" /><line x1="20" y1="5" x2="20" y2="65" stroke="var(--neon-green)" stroke-width="0.5" /><line x1="35" y1="5" x2="35" y2="65" stroke="var(--neon-green)" stroke-width="0.5" /><line x1="50" y1="5" x2="50" y2="65" stroke="var(--neon-green)" stroke-width="0.5" /><circle cx="35" cy="35" r="6" stroke="var(--neon-blue)" stroke-width="1" fill="none" />
+      </svg>
+     </div>
+     <div class="relative z-10">
+      <p class="font-orbitron text-xs tracking-[6px] uppercase mb-6" style="color:var(--neon-cyan)">Welcome to the future</p>
+      <h1 class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold mb-4 glow-text leading-tight" id="heroTitle">AJM TECHNOLOGIES</h1>
+      <p class="text-xl md:text-2xl mb-10 font-light" id="heroTagline" style="color:var(--text-secondary)">Innovating Your Digital World</p>
+      <div class="flex flex-wrap justify-center gap-4">
+       <button class="neon-btn" onclick="navigateTo('services')">Explore Services</button> <button class="neon-btn neon-btn-purple" onclick="navigateTo('booking')">Book Now</button> <button class="neon-btn neon-btn-green" onclick="navigateTo('payment')">Make Payment</button>
+      </div>
+     </div><!-- Testimonials -->
+     <div class="mt-20 w-full max-w-3xl mx-auto">
+      <p class="font-orbitron text-sm tracking-widest mb-8 uppercase" style="color:var(--neon-purple)">What Clients Say</p>
+      <div class="glass-panel p-8 relative overflow-hidden" id="testimonialCard">
+       <div class="absolute top-0 left-0 w-full h-1" style="background:linear-gradient(90deg,var(--neon-blue),var(--neon-purple))"></div>
+       <p class="text-lg italic mb-4" style="color:var(--text-secondary)" id="testimonialText">"AJM Technologies transformed our entire digital presence. Exceptional quality and professionalism."</p>
+       <p class="font-orbitron text-sm" style="color:var(--neon-cyan)" id="testimonialAuthor">— Sarah K., Business Owner</p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ========== SERVICES SECTION ========== -->
+   <section id="sec-services" class="px-6 py-24 max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">What We Do</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-text">Our Services</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid"></div>
+   </section>
+   <div class="section-divider"></div><!-- ========== PRICING SECTION ========== -->
+   <section id="sec-pricing" class="px-6 py-24 max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">Plans</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-purple">Pricing Plans</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="pricingGrid"></div>
+   </section>
+   <div class="section-divider"></div><!-- ========== PORTFOLIO SECTION ========== -->
+   <section id="sec-portfolio" class="px-6 py-24 max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">Our Work</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-text">Portfolio</h2>
+    </div>
+    <div class="flex flex-wrap justify-center gap-4 mb-10">
+     <button class="neon-btn text-xs portfolio-filter active" onclick="filterPortfolio('all',this)">All</button> <button class="neon-btn text-xs portfolio-filter" onclick="filterPortfolio('graphics',this)">Graphics</button> <button class="neon-btn text-xs portfolio-filter" onclick="filterPortfolio('web',this)">Websites</button> <button class="neon-btn text-xs portfolio-filter" onclick="filterPortfolio('media',this)">Photo/Video</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid"></div>
+   </section>
+   <div class="section-divider"></div><!-- ========== ABOUT SECTION ========== -->
+   <section id="sec-about" class="px-6 py-24 max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">Who We Are</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-purple">About AJM</h2>
+    </div>
+    <div class="glass-panel p-8 md:p-12 glow-box-purple">
+     <div class="grid md:grid-cols-2 gap-10">
+      <div>
+       <h3 class="font-orbitron text-xl mb-4" style="color:var(--neon-blue)">Our Mission</h3>
+       <p class="leading-relaxed mb-6" id="aboutText" style="color:var(--text-secondary)">We are a premier tech company based in West Nile, Uganda, delivering cutting-edge digital solutions. From stunning graphics and web development to reliable device repair and IT support, AJM Technologies is your one-stop destination for all things tech.</p>
+       <h3 class="font-orbitron text-xl mb-4" style="color:var(--neon-purple)">Our Vision</h3>
+       <p class="leading-relaxed" style="color:var(--text-secondary)">To become the leading technology solutions provider in East Africa, empowering businesses and individuals through innovation, creativity, and exceptional service.</p>
+      </div>
+      <div class="flex flex-col gap-6">
+       <div class="glass-panel p-6 glow-box text-center">
+        <p class="font-orbitron text-3xl font-bold" style="color:var(--neon-blue)">500+</p>
+        <p class="text-sm mt-1" style="color:var(--text-secondary)">Projects Completed</p>
+       </div>
+       <div class="glass-panel p-6 glow-box-purple text-center">
+        <p class="font-orbitron text-3xl font-bold" style="color:var(--neon-purple)">200+</p>
+        <p class="text-sm mt-1" style="color:var(--text-secondary)">Happy Clients</p>
+       </div>
+       <div class="glass-panel p-6 text-center" style="box-shadow:0 0 15px rgba(6,255,210,0.15)">
+        <p class="font-orbitron text-3xl font-bold" style="color:var(--neon-cyan)">24/7</p>
+        <p class="text-sm mt-1" style="color:var(--text-secondary)">Tech Support</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ========== BOOKING SECTION ========== -->
+   <section id="sec-booking" class="px-6 py-24 max-w-3xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">Get Started</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-text">Book a Service</h2>
+    </div>
+    <form class="glass-panel p-8 md:p-10 glow-box space-y-5" id="bookingForm" onsubmit="handleBooking(event)">
+     <div>
+      <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-name">Full Name</label> <input type="text" id="bk-name" placeholder="Enter your name" required>
+     </div>
+     <div>
+      <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-email">Email</label> <input type="email" id="bk-email" placeholder="email@example.com" required>
+     </div>
+     <div>
+      <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-phone">Phone</label> <input type="tel" id="bk-phone" placeholder="+256..." required>
+     </div>
+     <div>
+      <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-service">Service</label> <select id="bk-service" required> <option value="">Select a service</option> <option>Graphics Design</option> <option>Videography</option> <option>Photography</option> <option>Web Development</option> <option>Computer Repair</option> <option>Phone Repair</option> <option>Computer Troubleshooting</option> <option>IT Solutions</option> <option>Tech Support</option> </select>
+     </div>
+     <div class="grid grid-cols-2 gap-4">
+      <div>
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-date">Date</label> <input type="date" id="bk-date" required>
+      </div>
+      <div>
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-time">Time</label> <input type="time" id="bk-time" required>
+      </div>
+     </div>
+     <div>
+      <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="bk-msg">Additional Details</label> <textarea id="bk-msg" rows="3" placeholder="Describe your project..."></textarea>
+     </div><button type="submit" class="neon-btn w-full text-center" id="bookBtn"> <span id="bookBtnText">Submit Booking</span> </button>
+    </form>
+   </section>
+   <div class="section-divider"></div><!-- ========== PAYMENT SECTION ========== -->
+   <section id="sec-payment" class="px-6 py-24 max-w-3xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">Secure</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-purple">Make Payment</h2>
+     <p class="mt-4 text-sm" style="color:var(--text-secondary)">Demo payment interface — actual payment processing requires backend integration</p>
+    </div>
+    <div class="glass-panel p-8 md:p-10 glow-box-purple">
+     <div class="flex flex-wrap gap-3 mb-8 justify-center">
+      <button class="neon-btn text-xs pay-method active" onclick="selectPayMethod('momo',this)">📱 Mobile Money</button> <button class="neon-btn neon-btn-purple text-xs pay-method" onclick="selectPayMethod('card',this)">💳 Card</button>
+     </div>
+     <form onsubmit="handlePayment(event)" class="space-y-5">
+      <div id="momoFields">
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-purple)" for="pay-phone">Phone Number</label> <input type="tel" id="pay-phone" placeholder="+256...">
+       <div class="flex gap-3 mt-3">
+        <button type="button" class="neon-btn text-xs flex-1" style="border-color:#ffcc00;color:#ffcc00" onclick="selectMomo('mtn')">MTN MoMo</button> <button type="button" class="neon-btn text-xs flex-1" style="border-color:#ff0000;color:#ff4444" onclick="selectMomo('airtel')">Airtel Money</button>
+       </div>
+      </div>
+      <div id="cardFields" style="display:none" class="space-y-4">
+       <p class="text-center text-xs p-3 rounded-lg" style="background:rgba(168,85,247,0.1);color:var(--neon-purple);border:1px solid rgba(168,85,247,0.2)">🔒 Demo Mode — No real card data is collected or stored</p>
+      </div>
+      <div>
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-purple)" for="pay-amount">Amount (UGX)</label> <input type="number" id="pay-amount" placeholder="Enter amount" min="1000">
+      </div><button type="submit" class="neon-btn neon-btn-purple w-full text-center" id="payBtn"> <span id="payBtnText">Process Payment</span> </button>
+     </form>
+     <p class="text-center text-xs mt-6" style="color:var(--text-secondary)">Powered by Flutterwave / Paystack / Stripe (demo)</p>
+    </div>
+   </section>
+   <div class="section-divider"></div><!-- ========== CONTACT SECTION ========== -->
+   <section id="sec-contact" class="px-6 py-24 max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+     <p class="font-orbitron text-xs tracking-[6px] uppercase mb-4" style="color:var(--neon-cyan)">Reach Us</p>
+     <h2 class="font-orbitron text-3xl md:text-4xl font-bold glow-text">Contact</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+     <div class="space-y-6">
+      <div class="glass-panel p-6 glow-box">
+       <h3 class="font-orbitron text-sm mb-4" style="color:var(--neon-blue)"><i data-lucide="message-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px"></i>WhatsApp</h3>
+       <div class="space-y-2">
+        <a href="https://wa.me/256778625624" target="_blank" rel="noopener noreferrer" class="block text-sm hover:underline" style="color:var(--neon-cyan)">+256 778 625 624</a> <a href="https://wa.me/256764434132" target="_blank" rel="noopener noreferrer" class="block text-sm hover:underline" style="color:var(--neon-cyan)">+256 764 434 132</a> <a href="https://wa.me/256757420080" target="_blank" rel="noopener noreferrer" class="block text-sm hover:underline" style="color:var(--neon-cyan)">+256 757 420 080</a>
+       </div>
+      </div>
+      <div class="glass-panel p-6 glow-box-purple">
+       <h3 class="font-orbitron text-sm mb-4" style="color:var(--neon-purple)"><i data-lucide="phone" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px"></i>Call Us</h3>
+       <div class="space-y-2">
+        <a href="tel:+256784638852" class="block text-sm hover:underline" style="color:var(--text-secondary)">+256 784 638 852</a> <a href="tel:+256752360734" class="block text-sm hover:underline" style="color:var(--text-secondary)">+256 752 360 734</a> <a href="tel:+256787030254" class="block text-sm hover:underline" style="color:var(--text-secondary)">+256 787 030 254</a>
+       </div>
+      </div>
+      <div class="glass-panel p-6" style="box-shadow:0 0 15px rgba(6,255,210,0.1)">
+       <h3 class="font-orbitron text-sm mb-4" style="color:var(--neon-cyan)"><i data-lucide="mail" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px"></i>Email</h3><a href="mailto:ajm-tech-westnile@outlook.com" class="text-sm hover:underline" style="color:var(--neon-cyan)">ajm-tech-westnile@outlook.com</a>
+      </div>
+     </div>
+     <form class="glass-panel p-8 glow-box space-y-5" onsubmit="handleContact(event)" id="contactForm">
+      <div>
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="ct-name">Name</label> <input type="text" id="ct-name" placeholder="Your name" required>
+      </div>
+      <div>
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="ct-email">Email</label> <input type="email" id="ct-email" placeholder="email@example.com" required>
+      </div>
+      <div>
+       <label class="block text-sm mb-2 font-orbitron tracking-wider" style="color:var(--neon-blue)" for="ct-msg">Message</label> <textarea id="ct-msg" rows="4" placeholder="How can we help?" required></textarea>
+      </div><button type="submit" class="neon-btn w-full text-center" id="contactBtn"><span id="contactBtnText">Send Message</span></button>
+     </form>
+    </div>
+   </section><!-- FOOTER -->
+   <footer class="px-6 py-12 text-center" style="border-top:1px solid rgba(0,212,255,0.1)">
+    <p class="font-orbitron text-lg font-bold mb-2" style="background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">AJM TECHNOLOGIES</p>
+    <p class="text-sm" style="color:var(--text-secondary)">© 2024 AJM Technologies. All rights reserved.</p>
+    <p class="text-xs mt-2" style="color:var(--text-secondary)">Innovating Your Digital World</p>
+   </footer>
+  </div><!-- end app-root --> <!-- CHATBOT -->
+  <div class="chatbot-container">
+   <div class="chat-window glass-panel glow-box" id="chatWindow" style="border:1px solid rgba(0,212,255,0.2)">
+    <div class="p-4 flex items-center justify-between" style="border-bottom:1px solid rgba(0,212,255,0.1);background:rgba(0,212,255,0.05)">
+     <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center font-orbitron text-xs font-bold" style="background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple));color:#050a18">
+       AJ
+      </div>
+      <div>
+       <p class="font-orbitron text-xs font-bold" style="color:var(--neon-blue)">AJM Assistant</p>
+       <p class="text-xs" style="color:var(--text-secondary)">Online</p>
+      </div>
+     </div><button onclick="toggleChat()" style="background:none;border:none;color:var(--text-secondary);cursor:pointer"><i data-lucide="x" style="width:18px;height:18px"></i></button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+     <div class="chat-msg bot">
+      👋 Hello! I'm the AJM Technologies assistant. How can I help you today?
+     </div>
+    </div>
+    <div class="p-3 flex gap-2" style="border-top:1px solid rgba(0,212,255,0.1)">
+     <input type="text" id="chatInput" placeholder="Type a message..." style="flex:1;padding:10px 14px;font-size:14px" onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat()}"> <button onclick="sendChat()" class="neon-btn" style="padding:10px 16px"><i data-lucide="send" style="width:16px;height:16px"></i></button>
+    </div>
+    <div class="px-3 pb-3 flex flex-wrap gap-2" id="quickReplies">
+     <button class="text-xs px-3 py-1 rounded-full cursor-pointer" style="background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);color:var(--neon-blue)" onclick="quickChat('What services do you offer?')">Services</button> <button class="text-xs px-3 py-1 rounded-full cursor-pointer" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);color:var(--neon-purple)" onclick="quickChat('How do I book?')">Booking</button> <button class="text-xs px-3 py-1 rounded-full cursor-pointer" style="background:rgba(6,255,210,0.1);border:1px solid rgba(6,255,210,0.2);color:var(--neon-cyan)" onclick="quickChat('Show me pricing')">Pricing</button>
+    </div>
+   </div><button onclick="toggleChat()" class="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer" id="chatToggleBtn" style="background:linear-gradient(135deg,var(--neon-blue),var(--neon-purple));border:none;box-shadow:0 0 25px rgba(0,212,255,0.3)"> <i data-lucide="message-circle" style="width:24px;height:24px;color:#050a18"></i> </button>
+  </div><!-- VOICE BUTTON -->
+  <div style="position:fixed;bottom:24px;left:24px;z-index:1000">
+   <button onclick="toggleVoice()" class="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer" id="voiceBtn" style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);box-shadow:0 0 15px rgba(168,85,247,0.15)"> <i data-lucide="mic" style="width:20px;height:20px;color:var(--neon-purple)"></i> </button>
+   <div class="glass-panel p-3 mt-2 text-xs text-center hidden" id="voiceFeedback" style="width:180px;color:var(--text-secondary)">
+    🎤 Listening...
+   </div>
+  </div>
+  <script>
+// ===== CONFIG & SDK =====
+const defaultConfig = {
+  company_name: 'AJM TECHNOLOGIES',
+  tagline: 'Innovating Your Digital World',
+  about_text: 'We are a premier tech company based in West Nile, Uganda, delivering cutting-edge digital solutions. From stunning graphics and web development to reliable device repair and IT support, AJM Technologies is your one-stop destination for all things tech.',
+  background_color: '#050a18',
+  surface_color: '#0a1432',
+  text_color: '#e0e8ff',
+  primary_action_color: '#00d4ff',
+  secondary_action_color: '#a855f7',
+  font_family: 'Rajdhani',
+  font_size: 16
+};
+
+let bookings = [];
+let currentRecordCount = 0;
+
+const dataHandler = {
+  onDataChanged(data) {
+    bookings = data;
+    currentRecordCount = data.length;
+  }
+};
+
+(async () => {
+  const r = await window.dataSdk.init(dataHandler);
+  if (!r.isOk) console.error('Data SDK init failed');
+})();
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => {
+    const c = { ...defaultConfig, ...config };
+    document.getElementById('heroTitle').textContent = c.company_name;
+    document.getElementById('heroTagline').textContent = c.tagline;
+    document.getElementById('aboutText').textContent = c.about_text;
+
+    document.documentElement.style.setProperty('--bg-dark', c.background_color);
+    document.documentElement.style.setProperty('--bg-card', c.surface_color);
+    document.documentElement.style.setProperty('--text-primary', c.text_color);
+    document.documentElement.style.setProperty('--neon-blue', c.primary_action_color);
+    document.documentElement.style.setProperty('--neon-purple', c.secondary_action_color);
+
+    const ff = c.font_family + ', Rajdhani, sans-serif';
+    document.body.style.fontFamily = ff;
+    const bs = c.font_size;
+    document.body.style.fontSize = bs + 'px';
+    document.querySelectorAll('.font-orbitron').forEach(el => {
+      // leave orbitron headings
+    });
+  },
+  mapToCapabilities: (config) => {
+    const c = { ...defaultConfig, ...config };
+    const mk = (key) => ({
+      get: () => c[key] || defaultConfig[key],
+      set: (v) => { c[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+    });
+    return {
+      recolorables: [mk('background_color'), mk('surface_color'), mk('text_color'), mk('primary_action_color'), mk('secondary_action_color')],
+      borderables: [],
+      fontEditable: mk('font_family'),
+      fontSizeable: { get: () => c.font_size || defaultConfig.font_size, set: (v) => { c.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+    };
+  },
+  mapToEditPanelValues: (config) => {
+    const c = { ...defaultConfig, ...config };
+    return new Map([
+      ['company_name', c.company_name],
+      ['tagline', c.tagline],
+      ['about_text', c.about_text]
+    ]);
+  }
+});
+
+// ===== SERVICES DATA =====
+const services = [
+  { name: 'Graphics Design', icon: 'palette', desc: 'Logos, branding, social media creatives, and print designs.', color: '--neon-blue' },
+  { name: 'Videography', icon: 'video', desc: 'Professional video production, editing, and motion graphics.', color: '--neon-purple' },
+  { name: 'Photography', icon: 'camera', desc: 'Events, portraits, products, and commercial photography.', color: '--neon-cyan' },
+  { name: 'Web Development', icon: 'globe', desc: 'Responsive websites, web apps, e-commerce, and CMS.', color: '--neon-blue' },
+  { name: 'Computer Repair', icon: 'monitor', desc: 'Hardware diagnostics, repairs, upgrades, and maintenance.', color: '--neon-purple' },
+  { name: 'Phone Repair', icon: 'smartphone', desc: 'Screen replacement, battery, software, and water damage repair.', color: '--neon-green' },
+  { name: 'Troubleshooting', icon: 'settings', desc: 'System diagnostics, virus removal, and performance optimization.', color: '--neon-cyan' },
+  { name: 'IT Solutions', icon: 'server', desc: 'Network setup, cloud solutions, and infrastructure management.', color: '--neon-blue' },
+  { name: 'Tech Support', icon: 'headphones', desc: '24/7 remote and on-site technical support and consulting.', color: '--neon-purple' }
+];
+
+function renderServices() {
+  const grid = document.getElementById('servicesGrid');
+  grid.innerHTML = services.map((s, i) => `
+    <div class="glass-panel p-6 card-3d cursor-pointer glow-box slide-up" style="animation-delay:${i*0.08}s;border-color:rgba(0,212,255,0.1);transition:all .4s cubic-bezier(.34,.1,.68,.55)">
+      <div class="service-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:rgba(0,212,255,0.1);transition:all .4s ease">
+        <i data-lucide="${s.icon}" style="width:24px;height:24px;color:var(${s.color});transition:transform .4s ease;position:relative;z-index:1"></i>
+      </div>
+      <h3 class="font-orbitron text-base font-bold mb-2" style="color:var(${s.color})">${s.name}</h3>
+      <p class="text-sm leading-relaxed mb-4" style="color:var(--text-secondary)">${s.desc}</p>
+      <button class="neon-btn text-xs" onclick="navigateTo('booking')">Book Service</button>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ===== PRICING =====
+const plans = [
+  { name: 'Starter', price: '150,000', period: '/project', features: ['Basic Graphics Design','Simple Web Page','Phone Consultation','Email Support'], popular: false },
+  { name: 'Professional', price: '500,000', period: '/project', features: ['Advanced Graphics & Branding','Full Website Development','Video Production','Priority Support','2 Revisions'], popular: true },
+  { name: 'Enterprise', price: '1,500,000', period: '/month', features: ['All Services Included','Dedicated IT Support','Unlimited Revisions','24/7 Priority Access','Custom Solutions'], popular: false }
+];
+
+function renderPricing() {
+  const grid = document.getElementById('pricingGrid');
+  grid.innerHTML = plans.map(p => `
+    <div class="glass-panel p-8 relative card-3d ${p.popular?'price-popular':'glow-box'}" style="border-color:${p.popular?'var(--neon-cyan)':'rgba(0,212,255,0.1)'}">
+      <h3 class="font-orbitron text-lg mb-2" style="color:var(--neon-blue)">${p.name}</h3>
+      <p class="font-orbitron text-3xl font-bold mb-1" style="color:var(--text-primary)">UGX ${p.price}</p>
+      <p class="text-xs mb-6" style="color:var(--text-secondary)">${p.period}</p>
+      <ul class="space-y-3 mb-8">
+        ${p.features.map(f => `<li class="flex items-center gap-2 text-sm" style="color:var(--text-secondary)"><i data-lucide="check" style="width:14px;height:14px;color:var(--neon-cyan)"></i>${f}</li>`).join('')}
+      </ul>
+      <button class="neon-btn ${p.popular?'neon-btn-green':''}  w-full text-center text-xs" onclick="navigateTo('booking')">Get Started</button>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ===== PORTFOLIO =====
+const portfolioItems = [
+  { title: 'Brand Identity Suite', cat: 'graphics', gradient: 'linear-gradient(135deg,#0a1a3a,#1a0a3a)' },
+  { title: 'E-Commerce Platform', cat: 'web', gradient: 'linear-gradient(135deg,#0a2a3a,#0a1a2a)' },
+  { title: 'Corporate Event Shoot', cat: 'media', gradient: 'linear-gradient(135deg,#1a0a2a,#2a0a3a)' },
+  { title: 'Social Media Campaign', cat: 'graphics', gradient: 'linear-gradient(135deg,#0a1a2a,#0a3a2a)' },
+  { title: 'Business Website', cat: 'web', gradient: 'linear-gradient(135deg,#0a2a1a,#0a1a3a)' },
+  { title: 'Product Photography', cat: 'media', gradient: 'linear-gradient(135deg,#2a0a1a,#1a0a3a)' }
+];
+
+function renderPortfolio(filter='all') {
+  const grid = document.getElementById('portfolioGrid');
+  const items = filter === 'all' ? portfolioItems : portfolioItems.filter(i => i.cat === filter);
+  grid.innerHTML = items.map(p => `
+    <div class="glass-panel overflow-hidden card-3d cursor-pointer glow-box" style="border-color:rgba(0,212,255,0.08)">
+      <div class="h-48 flex items-center justify-center" style="background:${p.gradient}">
+        <p class="font-orbitron text-sm tracking-wider" style="color:var(--neon-cyan)">${p.title}</p>
+      </div>
+      <div class="p-4">
+        <span class="text-xs font-orbitron uppercase tracking-wider px-3 py-1 rounded-full" style="background:rgba(0,212,255,0.1);color:var(--neon-blue)">${p.cat}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterPortfolio(cat, btn) {
+  document.querySelectorAll('.portfolio-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPortfolio(cat);
+}
+
+// ===== NAVIGATION =====
+function navigateTo(section) {
+  const el = document.getElementById('sec-' + section);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  }
+}
+
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ===== TOAST =====
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast toast-' + type + ' show';
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ===== BOOKING =====
+async function handleBooking(e) {
+  e.preventDefault();
+  if (currentRecordCount >= 999) { showToast('Maximum bookings reached. Please contact us directly.', 'error'); return; }
+  const btn = document.getElementById('bookBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>';
+  const data = {
+    type: 'booking',
+    name: document.getElementById('bk-name').value,
+    email: document.getElementById('bk-email').value,
+    phone: document.getElementById('bk-phone').value,
+    service: document.getElementById('bk-service').value,
+    date: document.getElementById('bk-date').value,
+    time: document.getElementById('bk-time').value,
+    message: document.getElementById('bk-msg').value,
+    status: 'pending',
+    created_at: new Date().toISOString()
+  };
+  const result = await window.dataSdk.create(data);
+  btn.disabled = false;
+  btn.innerHTML = '<span id="bookBtnText">Submit Booking</span>';
+  if (result.isOk) {
+    showToast('✅ Booking confirmed! We\'ll contact you shortly.');
+    document.getElementById('bookingForm').reset();
+  } else {
+    showToast('Booking failed. Please try again.', 'error');
+  }
+}
+
+// ===== CONTACT =====
+async function handleContact(e) {
+  e.preventDefault();
+  if (currentRecordCount >= 999) { showToast('Message limit reached. Please call or WhatsApp us.', 'error'); return; }
+  const btn = document.getElementById('contactBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>';
+  const data = {
+    type: 'contact',
+    name: document.getElementById('ct-name').value,
+    email: document.getElementById('ct-email').value,
+    phone: '',
+    service: '',
+    date: '',
+    time: '',
+    message: document.getElementById('ct-msg').value,
+    status: 'new',
+    created_at: new Date().toISOString()
+  };
+  const result = await window.dataSdk.create(data);
+  btn.disabled = false;
+  btn.innerHTML = '<span id="contactBtnText">Send Message</span>';
+  if (result.isOk) {
+    showToast('✅ Message sent! We\'ll respond soon.');
+    document.getElementById('contactForm').reset();
+  } else {
+    showToast('Failed to send. Please try again.', 'error');
+  }
+}
+
+// ===== PAYMENT =====
+let payMethod = 'momo';
+function selectPayMethod(method, btn) {
+  payMethod = method;
+  document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('momoFields').style.display = method === 'momo' ? 'block' : 'none';
+  document.getElementById('cardFields').style.display = method === 'card' ? 'block' : 'none';
+}
+function selectMomo(provider) { showToast('📱 ' + provider.toUpperCase() + ' MoMo selected (demo)'); }
+function handlePayment(e) {
+  e.preventDefault();
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>';
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.innerHTML = '<span id="payBtnText">Process Payment</span>';
+    showToast('✅ Payment simulation successful! In production, this integrates with Flutterwave/Paystack/Stripe.');
+  }, 2000);
+}
+
+// ===== CHATBOT =====
+function toggleChat() {
+  const w = document.getElementById('chatWindow');
+  const b = document.getElementById('chatToggleBtn');
+  w.classList.toggle('open');
+  b.style.display = w.classList.contains('open') ? 'none' : 'flex';
+}
+
+const chatResponses = {
+  'services': 'We offer: Graphics Design, Videography, Photography, Web Development, Computer & Phone Repair, IT Solutions, and Tech Support! Which interests you?',
+  'pricing': 'Our plans start from UGX 150,000 (Starter), UGX 500,000 (Professional), up to UGX 1,500,000/month (Enterprise). Want details on a specific plan?',
+  'book': 'To book a service, scroll to our Booking section or click "Book Now" in the menu. Select your service, date, and time!',
+  'contact': 'Reach us via WhatsApp: +256778625624, Call: +256784638852, or Email: ajm-tech-westnile@outlook.com',
+  'payment': 'We accept MTN MoMo, Airtel Money, and card payments via Flutterwave/Paystack. Go to the Payment section to proceed!',
+  'hello': 'Hello! 👋 Welcome to AJM Technologies. How can I assist you today?',
+  'default': 'Thanks for your message! For detailed assistance, please contact us at +256778625624 or book a consultation. Is there anything specific I can help with?'
+};
+
+function getChatResponse(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('service') || m.includes('what do you')) return chatResponses.services;
+  if (m.includes('price') || m.includes('cost') || m.includes('how much')) return chatResponses.pricing;
+  if (m.includes('book') || m.includes('appointment') || m.includes('schedule')) return chatResponses.book;
+  if (m.includes('contact') || m.includes('phone') || m.includes('whatsapp') || m.includes('email')) return chatResponses.contact;
+  if (m.includes('pay') || m.includes('money') || m.includes('momo')) return chatResponses.payment;
+  if (m.includes('hi') || m.includes('hello') || m.includes('hey')) return chatResponses.hello;
+  return chatResponses.default;
+}
+
+function addChatMsg(text, type) {
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + type;
+  div.textContent = text;
+  document.getElementById('chatMessages').appendChild(div);
+  document.getElementById('chatMessages').scrollTop = 99999;
+}
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addChatMsg(msg, 'user');
+  input.value = '';
+  // typing indicator
+  const typing = document.createElement('div');
+  typing.className = 'chat-msg bot typing-dots';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  document.getElementById('chatMessages').appendChild(typing);
+  setTimeout(() => {
+    typing.remove();
+    addChatMsg(getChatResponse(msg), 'bot');
+  }, 1000);
+}
+
+function quickChat(msg) { document.getElementById('chatInput').value = msg; sendChat(); }
+
+// ===== VOICE =====
+let voiceActive = false;
+function toggleVoice() {
+  const fb = document.getElementById('voiceFeedback');
+  const btn = document.getElementById('voiceBtn');
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    fb.classList.remove('hidden');
+    fb.textContent = '⚠️ Voice not supported in this browser';
+    setTimeout(() => fb.classList.add('hidden'), 3000);
+    return;
+  }
+  if (voiceActive) return;
+  voiceActive = true;
+  fb.classList.remove('hidden');
+  fb.textContent = '🎤 Listening...';
+  btn.style.boxShadow = '0 0 25px rgba(168,85,247,0.5)';
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.onresult = (e) => {
+    const t = e.results[0][0].transcript.toLowerCase();
+    fb.textContent = '✅ "' + t + '"';
+    if (t.includes('service')) navigateTo('services');
+    else if (t.includes('book')) navigateTo('booking');
+    else if (t.includes('contact')) navigateTo('contact');
+    else if (t.includes('price') || t.includes('pricing')) navigateTo('pricing');
+    else if (t.includes('about')) navigateTo('about');
+    else if (t.includes('portfolio') || t.includes('work')) navigateTo('portfolio');
+    else if (t.includes('home')) navigateTo('home');
+    else if (t.includes('pay')) navigateTo('payment');
+    else fb.textContent = '❓ Try: "Go to services"';
+    setTimeout(() => fb.classList.add('hidden'), 3000);
+  };
+  recognition.onerror = () => { fb.textContent = '❌ Could not hear. Try again.'; setTimeout(() => fb.classList.add('hidden'), 2000); };
+  recognition.onend = () => { voiceActive = false; btn.style.boxShadow = '0 0 15px rgba(168,85,247,0.15)'; };
+  recognition.start();
+}
+
+// ===== PARTICLES =====
+function initParticles() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for (let i = 0; i < 60; i++) {
+    particles.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5+0.3, dx: (Math.random()-0.5)*0.4, dy: (Math.random()-0.5)*0.4, o: Math.random()*0.4+0.1 });
+  }
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(0,212,255,${p.o})`;
+      ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x<0||p.x>w) p.dx*=-1;
+      if (p.y<0||p.y>h) p.dy*=-1;
+    });
+    // connections
+    for (let i=0;i<particles.length;i++) {
+      for (let j=i+1;j<particles.length;j++) {
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if (dist<120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(0,212,255,${0.06*(1-dist/120)})`;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ===== TESTIMONIALS ROTATION =====
+const testimonials = [
+  { text: '"AJM Technologies transformed our entire digital presence. Exceptional quality and professionalism."', author: '— Sarah K., Business Owner' },
+  { text: '"The best tech support in West Nile. Fast, reliable, and affordable."', author: '— James M., Student' },
+  { text: '"Their web development skills are top-notch. Our website traffic doubled!"', author: '— Grace A., Entrepreneur' }
+];
+let tIdx = 0;
+function rotateTestimonials() {
+  tIdx = (tIdx + 1) % testimonials.length;
+  const tc = document.getElementById('testimonialText');
+  const ta = document.getElementById('testimonialAuthor');
+  tc.style.opacity = 0; ta.style.opacity = 0;
+  setTimeout(() => {
+    tc.textContent = testimonials[tIdx].text;
+    ta.textContent = testimonials[tIdx].author;
+    tc.style.opacity = 1; ta.style.opacity = 1;
+  }, 400);
+}
+setInterval(rotateTestimonials, 5000);
+
+// ===== INIT =====
+renderServices();
+renderPricing();
+renderPortfolio();
+initParticles();
+lucide.createIcons();
+
+// Transition styles for testimonials
+document.getElementById('testimonialText').style.transition = 'opacity 0.4s';
+document.getElementById('testimonialAuthor').style.transition = 'opacity 0.4s';
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ed6a97914e1c832',t:'MTc3NjM3ODkxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
